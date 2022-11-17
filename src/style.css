@@ -1,8 +1,11 @@
 :root {
   --purple: #1a0d36;
+  --purple2: #4e3e80;
+  --purple3: #8f7bcc;
+  --mint: #ade3d9;
 
-  --space-xs: 0.36em;
-  --space-sm: 0.6em;
+  --space-xs: 0.12em;
+  --space-sm: 0.9em;
   --space-md: 1.8em;
 }
 
@@ -13,7 +16,25 @@ body {
   height: 100vh;
 }
 p {
+  color: var(--purple2);
+  font-weight: bold;
+  font-size: 0.96em;
   margin: 0 0 var(--space-sm);
+}
+a {
+  display: block;
+  cursor: pointer;
+  color: var(--purple2);
+  transition: all 90ms;
+  font-size: 0.88em;
+  padding: var(--space-xs);
+}
+a:hover,
+a.active {
+  color: white;
+}
+a.active:hover {
+  cursor: default;
 }
 select {
   min-width: 160px;
@@ -27,10 +48,17 @@ select {
   flex-direction: column;
 }
 header {
-  padding: var(--space-md);
+  background: linear-gradient(var(--purple), var(--purple2));
   background: var(--purple);
-  color: white;
+  border-bottom: 1px solid var(--purple);
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
   display: flex;
+  justify-content: space-around;
+  padding: var(--space-md);
+  color: white;
 }
 header > div {
   flex: 1;
