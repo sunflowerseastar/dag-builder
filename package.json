@@ -2,6 +2,14 @@
   "name": "dag-builder",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "build": "react-scripts build",
+    "eject": "react-scripts eject",
+    "prettier:check": "prettier --check '**/*.{html,ts,js,css,json}'",
+    "prettier:write": "prettier --write '**/*.{html,ts,js,css,json}'",
+    "start": "react-scripts start",
+    "test": "react-scripts test"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -12,11 +20,18 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "simple-git-hooks": "^2.8.1"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{tsx,js,css,md,json}": [
+      "prettier --write"
+    ]
   },
   "eslintConfig": {
     "extends": [

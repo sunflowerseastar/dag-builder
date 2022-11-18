@@ -13,14 +13,14 @@ const SelectionGroup = ({ heading, options, selection, setSelection }) => (
   <div>
     <p>{heading}:</p>
     {options.map((option) => (
-      <a
+      <button
         key={option.name}
         value={option.name}
         className={selection === option.name ? "active" : ""}
         onClick={() => setSelection(option.name)}
       >
         {option.name}
-      </a>
+      </button>
     ))}
   </div>
 );

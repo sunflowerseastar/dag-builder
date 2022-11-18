@@ -21,19 +21,22 @@ p {
   font-size: 0.96em;
   margin: 0 0 var(--space-sm);
 }
-a {
+button {
   display: block;
   cursor: pointer;
   color: var(--purple2);
   transition: all 90ms;
   font-size: 0.88em;
   padding: var(--space-xs);
+  border-radius: 0;
+  background: none;
+  border: 0;
 }
-a:hover,
-a.active {
+button:hover,
+button.active {
   color: white;
 }
-a.active:hover {
+button.active:hover {
   cursor: default;
 }
 select {

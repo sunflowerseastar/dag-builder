@@ -127,7 +127,7 @@ const Dag = ({ areArrowsShown, data, layering, spacing, spline }) => {
       .attr("text-anchor", "middle")
       .attr("alignment-baseline", "middle")
       .attr("fill", "white");
-  }, [data, layering, spacing, spline]);
+  }, [areArrowsShown, data, layering, spacing, spline]);
   return <svg className="dag-svg"></svg>;
 };
 
