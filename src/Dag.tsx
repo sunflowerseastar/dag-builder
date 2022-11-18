@@ -4,6 +4,7 @@
 import { useEffect } from "react";
 
 import { DagType } from "./types";
+import Logo from "./Logo";
 
 const d3 = window.d3;
 
@@ -175,7 +176,13 @@ const Dag: React.FC<DagProps> = ({
       .attr("alignment-baseline", "middle")
       .attr("fill", "white");
   }, [areArrowsShown, data, layering, spacing, spline]);
-  return <svg className="dag-svg"></svg>;
+  // return <svg className="dag-svg"></svg>;
+  return (
+    <div className="dag-svg-container">
+      <svg className="dag-svg"></svg>
+      <Logo />
+    </div>
+  );
 };
 
 export default Dag;
