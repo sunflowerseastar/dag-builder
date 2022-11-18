@@ -153,11 +153,10 @@ function App() {
   };
 
   const isDagReady =
-    currentData.data &&
-    currentSpline?.areArrowsShown &&
-    currentLayering?.layering &&
-    currentSpacing?.name &&
-    currentSpline?.spline;
+    !!currentData.data &&
+    !!currentLayering?.layering &&
+    !!currentSpacing?.name &&
+    !!currentSpline?.spline;
 
   return (
     <div className="app">
