@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import cx from "classnames";
 
-import Dag from "./Dag.js";
-import { Editor } from "./Editor.js";
-import { isAcyclic, removeNodeFromDag, toggleParentId } from "./utilities.js";
+import Dag from "./Dag";
+import { Editor } from "./Editor";
+import { isAcyclic, removeNodeFromDag, toggleParentId } from "./utilities";
 
 import dag1 from "./data/dag.json";
 import diamond from "./data/diamond.json";
 import ex from "./data/ex.json";
 import grafo from "./data/grafo.json";
 
-const dataChoices = [
+import { CurrentDataState, DataChoice, Option } from "./types";
+
+const dataChoices: DataChoice[] = [
   { name: "Diamond", data: diamond },
   { name: "Multi", data: dag1 },
   { name: "Cross", data: ex },
@@ -44,7 +46,18 @@ const layeringChoices = [
   },
 ];
 
-const SelectionGroup = ({ heading, options, selection, setSelection }) => (
+type SelectionGroupProps = {
+  heading: string;
+  options: Option[];
+  selection: string;
+  setSelection: Function;
+};
+const SelectionGroup: React.FC<SelectionGroupProps> = ({
+  heading,
+  options,
+  selection,
+  setSelection,
+}) => (
   <div>
     <p>{heading}:</p>
     {options.map((option) => (
@@ -62,53 +75,72 @@ const SelectionGroup = ({ heading, options, selection, setSelection }) => (
 
 function App() {
   const spacingChoices = [{ name: "Default" }, { name: "Compact" }];
-  const [selectedSpacing, setSelectedSpacing] = useState(
+  const [selectedSpacing, setSelectedSpacing] = useState<string>(
     spacingChoices[0].name
   );
   const currentSpacing = spacingChoices.find(
     ({ name }) => name === selectedSpacing
   );
 
-  const [selectedSpline, setSelectedSpline] = useState(splineChoices[0].name);
+  const defaultSplineChoice = splineChoices[0];
+  const [selectedSpline, setSelectedSpline] = useState<string>(
+    defaultSplineChoice.name
+  );
   const currentSpline = splineChoices.find(
     ({ name }) => name === selectedSpline
   );
 
-  const [selectedLayering, setSelectedLayering] = useState(
+  const [selectedLayering, setSelectedLayering] = useState<string>(
     layeringChoices[0].name
   );
   const currentLayering = layeringChoices.find(
     ({ name }) => name === selectedLayering
   );
 
-  const [selectedData, setSelectedData] = useState(dataChoices[0].name);
+  /*
+   * "selected" data and "current" data are slightly different:
+   *   - selected is when a user chooses a default example dataset (static)
+   *   - current is the DAG as the user is editing it (dynamic)
+   */
+  const defaultCurrentData = dataChoices[0];
+  const [selectedData, setSelectedData] = useState<string>(
+    defaultCurrentData.name
+  );
 
-  const [currentData, setCurrentData] = useState(
-    dataChoices.find(({ name }) => name === selectedData)
+  const [currentData, setCurrentData] = useState<CurrentDataState>(
+    dataChoices.find(({ name }) => name === selectedData) || defaultCurrentData
   );
 
   useEffect(() => {
-    setCurrentData(dataChoices.find(({ name }) => name === selectedData));
+    // when a user chooses a new dataset example, clobber the "current" data
+    const currentSelectedData = dataChoices.find(
+      ({ name }) => name === selectedData
+    );
+    if (currentSelectedData) {
+      setCurrentData(currentSelectedData);
+    }
   }, [selectedData]);
 
   const [isEditorOpen, setIsEditorOpen] = useState(true);
 
   const addNode = () => {
-    const nextId = Math.max(...currentData.data.map(({ id }) => id)) + 1;
+    if (!currentData) return;
+    const nextId =
+      Math.max(...currentData.data.map(({ id }) => parseInt(id))) + 1;
     setCurrentData((prevData) => ({
       ...prevData,
       data: [...prevData.data, { id: nextId.toString() }],
     }));
   };
 
-  const removeNode = (id) => {
+  const removeNode = (id: string) => {
     setCurrentData((prevData) => ({
       ...prevData,
       data: removeNodeFromDag(prevData.data, id),
     }));
   };
 
-  const toggleConnection = (id, pid) => {
+  const toggleConnection = (id: string, pid: string) => {
     const potentialNewGraph = toggleParentId(currentData.data, id, pid);
     if (isAcyclic(potentialNewGraph)) {
       setCurrentData((prevData) => ({
@@ -119,6 +151,13 @@ function App() {
       console.log("cyclical");
     }
   };
+
+  const isDagReady =
+    currentData.data &&
+    currentSpline?.areArrowsShown &&
+    currentLayering?.layering &&
+    currentSpacing?.name &&
+    currentSpline?.spline;
 
   return (
     <div className="app">
@@ -162,13 +201,13 @@ function App() {
             toggleConnection={toggleConnection}
           />
 
-          {currentData.data && (
+          {isDagReady && (
             <Dag
               areArrowsShown={currentSpline.areArrowsShown}
               data={currentData.data}
-              layering={currentLayering.layering}
-              spacing={currentSpacing.name}
-              spline={currentSpline.spline}
+              layering={currentLayering?.layering}
+              spacing={currentSpacing?.name}
+              spline={currentSpline?.spline}
             />
           )}
         </div>

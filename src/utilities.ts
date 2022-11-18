@@ -1,4 +1,6 @@
-export const toggleParentId = (dag, id, pid) =>
+import { DagType } from "./types";
+
+export const toggleParentId = (dag: DagType, id: string, pid: string) =>
   dag.map((obj) =>
     obj.id === id
       ? {
@@ -11,7 +13,8 @@ export const toggleParentId = (dag, id, pid) =>
       : obj
   );
 
-export const isAcyclic = (dag) => {
+type IsAcyclic = (dag: DagType) => boolean;
+export const isAcyclic: IsAcyclic = (dag) => {
   if (!dag.length) {
     // all the leaves were removed: the graph is acyclical
     return true;
@@ -39,7 +42,8 @@ export const isAcyclic = (dag) => {
   }
 };
 
-export const removeNodeFromDag = (dag, id) => {
+type RemoveNodeFromDag = (dag: DagType, id: string) => DagType;
+export const removeNodeFromDag: RemoveNodeFromDag = (dag, id) => {
   const dagIdIndex = dag.findIndex(({ id: nodeId }) => nodeId === id);
   let newDag = dag.map((node) => ({
     ...node,

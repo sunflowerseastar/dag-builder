@@ -3,7 +3,17 @@ import cx from "classnames";
 
 import { isAcyclic, toggleParentId } from "./utilities";
 
-export const Editor = ({
+import { CurrentDataState } from "./types";
+
+interface EditorProps {
+  addNode: React.MouseEventHandler;
+  currentData: CurrentDataState;
+  isEditorOpen: boolean;
+  removeNode: Function;
+  setIsEditorOpen: Function;
+  toggleConnection: Function;
+}
+export const Editor: React.FC<EditorProps> = ({
   addNode,
   currentData,
   isEditorOpen,

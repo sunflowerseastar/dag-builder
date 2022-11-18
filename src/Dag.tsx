@@ -3,9 +3,37 @@
 // https://codepen.io/brinkbot/pen/oNZJXqK
 import { useEffect } from "react";
 
+import { DagType } from "./types";
+
 const d3 = window.d3;
 
-const Dag = ({ areArrowsShown, data, layering, spacing, spline }) => {
+type D3node = {
+  data: {
+    id: number;
+  };
+  DataChildren: Array<Object>;
+  x?: number;
+  y?: number;
+};
+type D3point = {
+  x: number;
+  y: number;
+};
+
+interface DagProps {
+  areArrowsShown: boolean;
+  data: DagType;
+  layering: Function;
+  spacing: string;
+  spline: Function;
+}
+const Dag: React.FC<DagProps> = ({
+  areArrowsShown,
+  data,
+  layering,
+  spacing,
+  spline,
+}) => {
   useEffect(() => {
     const dag = d3.dagStratify()(data);
     const nodeRadius = 30;
@@ -13,7 +41,7 @@ const Dag = ({ areArrowsShown, data, layering, spacing, spline }) => {
       1.2 * nodeRadius * 2 * 1.5,
       nodeRadius * 2 * 1.5,
     ];
-    const nodeSpacingCompact = (node) => [
+    const nodeSpacingCompact = (node: D3node) => [
       (node ? 3.6 : 0.25) * nodeRadius,
       3 * nodeRadius,
     ];
@@ -37,8 +65,8 @@ const Dag = ({ areArrowsShown, data, layering, spacing, spline }) => {
     const line = d3
       .line()
       .curve(spline)
-      .x((d) => d.x)
-      .y((d) => d.y);
+      .x((d: D3point) => d.x)
+      .y((d: D3point) => d.y);
 
     // clean-up (for re-renders)
     svgSelection.selectAll("g").remove();
@@ -51,29 +79,34 @@ const Dag = ({ areArrowsShown, data, layering, spacing, spline }) => {
       .data(dag.links())
       .enter()
       .append("path")
-      .attr("d", ({ points }) => line(points))
+      .attr("d", ({ points }: { points: D3point[] }) => line(points))
       .attr("fill", "none")
       .attr("stroke-width", 3)
-      .attr("stroke", ({ source, target }) => {
-        // encodeURIComponents for spaces, hope id doesn't have a `--` in it
-        const gradId = encodeURIComponent(
-          `${source.data.id}--${target.data.id}`
-        );
-        const grad = defs
-          .append("linearGradient")
-          .attr("id", gradId)
-          .attr("gradientUnits", "userSpaceOnUse")
-          .attr("x1", source.x)
-          .attr("x2", target.x)
-          .attr("y1", source.y)
-          .attr("y2", target.y);
-        grad.append("stop").attr("offset", "0%").attr("stop-color", "#4e3e80");
-        grad
-          .append("stop")
-          .attr("offset", "100%")
-          .attr("stop-color", "#1a0d36");
-        return `url(#${gradId})`;
-      });
+      .attr(
+        "stroke",
+        ({ source, target }: { source: D3node; target: D3node }) => {
+          const gradId = encodeURIComponent(
+            `${source.data.id}--${target.data.id}`
+          );
+          const grad = defs
+            .append("linearGradient")
+            .attr("id", gradId)
+            .attr("gradientUnits", "userSpaceOnUse")
+            .attr("x1", source.x)
+            .attr("x2", target.x)
+            .attr("y1", source.y)
+            .attr("y2", target.y);
+          grad
+            .append("stop")
+            .attr("offset", "0%")
+            .attr("stop-color", "#4e3e80");
+          grad
+            .append("stop")
+            .attr("offset", "100%")
+            .attr("stop-color", "#1a0d36");
+          return `url(#${gradId})`;
+        }
+      );
 
     // Select nodes
     const nodes = svgSelection
@@ -82,7 +115,10 @@ const Dag = ({ areArrowsShown, data, layering, spacing, spline }) => {
       .data(dag.descendants())
       .enter()
       .append("g")
-      .attr("transform", ({ x, y }) => `translate(${x}, ${y})`);
+      .attr(
+        "transform",
+        ({ x, y }: { x: number; y: number }) => `translate(${x}, ${y})`
+      );
 
     // Plot node circles
     nodes.append("circle").attr("r", nodeRadius).attr("fill", "#4e3e80");
@@ -98,18 +134,29 @@ const Dag = ({ areArrowsShown, data, layering, spacing, spline }) => {
         .enter()
         .append("path")
         .attr("d", arrow)
-        .attr("transform", ({ source, target, points }) => {
-          const [end, start] = points.slice().reverse();
-          // This sets the arrows the node radius (20) + a little bit (3) away from the node center, on the last line segment of the edge. This means that edges that only span ine level will work perfectly, but if the edge bends, this will be a little off.
-          const dx = start.x - end.x;
-          const dy = start.y - end.y;
-          const scale = (nodeRadius * 1.15) / Math.sqrt(dx * dx + dy * dy);
-          // This is the angle of the last line segment
-          const angle = (Math.atan2(-dy, -dx) * 180) / Math.PI + 90;
-          return `translate(${end.x + dx * scale}, ${
-            end.y + dy * scale
-          }) rotate(${angle})`;
-        })
+        .attr(
+          "transform",
+          ({
+            source,
+            target,
+            points,
+          }: {
+            source: D3node;
+            target: D3node;
+            points: D3point[];
+          }) => {
+            const [end, start] = points.slice().reverse();
+            // This sets the arrows the node radius (20) + a little bit (3) away from the node center, on the last line segment of the edge. This means that edges that only span ine level will work perfectly, but if the edge bends, this will be a little off.
+            const dx = start.x - end.x;
+            const dy = start.y - end.y;
+            const scale = (nodeRadius * 1.15) / Math.sqrt(dx * dx + dy * dy);
+            // This is the angle of the last line segment
+            const angle = (Math.atan2(-dy, -dx) * 180) / Math.PI + 90;
+            return `translate(${end.x + dx * scale}, ${
+              end.y + dy * scale
+            }) rotate(${angle})`;
+          }
+        )
         // .attr("fill", ({ target }) => colorMap[target.data.id])
         .attr("fill", "#4e3e80")
         .attr("stroke", "white")
@@ -120,7 +167,7 @@ const Dag = ({ areArrowsShown, data, layering, spacing, spline }) => {
     // Add text to nodes
     nodes
       .append("text")
-      .text((d) => d.data.id)
+      .text((d: D3node) => d.data.id)
       .style("dominant-baseline", "central")
       .attr("font-weight", "bold")
       .attr("font-family", "sans-serif")
