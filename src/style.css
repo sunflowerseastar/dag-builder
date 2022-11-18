@@ -1,12 +1,21 @@
 :root {
+  --purple5: #0c041c;
+  --purple4: #120926;
   --purple: #1a0d36;
   --purple2: #4e3e80;
   --purple3: #8f7bcc;
+  --purple6: #2c1a54;
+  --purple7: #1d0f3c;
   --mint: #ade3d9;
+  --black: #222;
+  --red: #803e3e;
 
-  --space-xs: 0.12em;
+  --space-xs: 0.2em;
   --space-sm: 0.9em;
   --space-md: 1.8em;
+
+  --transition-fast: 90ms;
+  --transition-medium: 200ms;
 }
 
 body {
@@ -14,18 +23,20 @@ body {
   font-family: system-ui, sans-serif;
   letter-spacing: 0.02em;
   height: 100vh;
+  color: white;
 }
 p {
   color: var(--purple2);
   font-weight: bold;
   font-size: 0.96em;
   margin: 0 0 var(--space-sm);
+  cursor: default;
 }
 button {
   display: block;
   cursor: pointer;
   color: var(--purple2);
-  transition: all 90ms;
+  transition: all var(--transition-fast);
   font-size: 0.88em;
   padding: var(--space-xs);
   border-radius: 0;
@@ -51,8 +62,9 @@ select {
   flex-direction: column;
 }
 header {
-  background: linear-gradient(var(--purple), var(--purple2));
-  background: var(--purple);
+  /* background: linear-gradient(var(--purple), var(--purple4)); */
+  background: linear-gradient(var(--purple), 90%, var(--purple4));
+  /* background: var(--purple); */
   border-bottom: 1px solid var(--purple);
 }
 .header-inner {
@@ -61,13 +73,135 @@ header {
   display: flex;
   justify-content: space-around;
   padding: var(--space-md);
-  color: white;
 }
 header > div {
   flex: 1;
 }
+
+.main-container {
+  position: relative;
+  display: flex;
+  flex: 1;
+}
+.main {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 169%;
+  display: flex;
+  flex: 1;
+  transition: all var(--transition-medium);
+}
+.main.isEditorOpen {
+  width: 100%;
+}
 .dag-svg {
   padding: var(--space-md) var(--space-sm);
+  flex: 3;
   max-width: 100%;
   max-height: 100%;
+}
+
+.editor {
+  position: relative;
+  flex: 2;
+  background: var(--purple4);
+  padding: var(--space-md) 0 var(--space-md) var(--space-md);
+  font-size: 1.5em;
+}
+.editor.isEditorOpen {
+  /* background: var(--purple); */
+}
+.editor-pane {
+  background: var(--purple5);
+  max-height: calc(100% - var(--space-md));
+  border-left: 1px solid var(--purple);
+  border-top: 1px solid var(--purple);
+  overflow: scroll;
+  color: var(--purple3);
+  padding: var(--space-sm) var(--space-md);
+}
+.editor .tab {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  bottom: 0;
+  width: 20px; /* one-off */
+  background: var(--purple);
+  font-family: monospace;
+  font-size: 1.5em;
+  transition: all var(--transition-fast);
+}
+.editor .tab:hover {
+  background: var(--purple2);
+}
+.editor .node {
+  display: flex;
+  padding: var(--space-sm) 0;
+}
+.editor .node + .node {
+  border-top: 1px solid var(--purple);
+}
+.editor .node-id {
+  position: relative;
+  align-self: center;
+  padding-right: var(--space-sm);
+  font-family: monospace;
+  min-width: 30px;
+  color: white;
+  cursor: default;
+}
+.editor .node-id .button-remove {
+  position: absolute;
+  left: -24px;
+  top: 50%;
+  transform: translateY(-47%);
+  font-family: monospace;
+  font-size: 0.7em;
+  padding: var(--space-xs);
+  color: var(--purple6);
+}
+.editor .node-id .button-remove:hover {
+  color: var(--red);
+  display: block;
+}
+.editor .pids {
+  flex: 1;
+}
+.editor .button-pid {
+  font-family: monospace;
+  display: inline-block;
+  padding: var(--space-xs);
+  min-width: 30px;
+}
+.editor .button-pid.disabled {
+  background: var(--purple4);
+  pointer-events: none;
+  opacity: 0.5;
+}
+.editor .button-pid.connected {
+  background: var(--purple2);
+  color: #bbb;
+}
+.editor .button-pid:hover {
+  background: var(--purple);
+}
+.editor .button-pid.connected:hover {
+  background: var(--purple2);
+  color: #fff;
+}
+.editor .node-add {
+  padding-top: var(--space-sm);
+}
+
+.editor .button-add {
+  width: 100%;
+  padding: var(--space-sm);
+  font-family: monospace;
+  background: var(--purple);
+}
+.editor .button-add:hover {
+  color: var(--purple3);
+  background: var(--purple7);
 }
