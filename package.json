@@ -1,7 +1,6 @@
 {
   "name": "dag-builder",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.2.0",
   "scripts": {
     "build": "react-scripts build",
     "eject": "react-scripts eject",

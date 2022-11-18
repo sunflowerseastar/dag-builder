@@ -26,11 +26,21 @@ body {
   color: white;
 }
 p {
-  color: var(--purple2);
-  font-weight: bold;
-  font-size: 0.96em;
+  position: relative;
+  color: var(--purple3);
+  padding-right: var(--space-md);
   margin: 0 0 var(--space-sm);
   cursor: default;
+  display: block;
+}
+p:after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--purple6);
 }
 button {
   display: block;
@@ -62,10 +72,7 @@ select {
   flex-direction: column;
 }
 header {
-  /* background: linear-gradient(var(--purple), var(--purple4)); */
-  background: linear-gradient(var(--purple), 90%, var(--purple4));
-  /* background: var(--purple); */
-  border-bottom: 1px solid var(--purple);
+  background: linear-gradient(var(--purple), 64%, var(--purple4));
 }
 .header-inner {
   max-width: 1100px;
@@ -118,7 +125,7 @@ header > div {
   max-height: calc(100% - var(--space-md));
   border-left: 1px solid var(--purple);
   border-top: 1px solid var(--purple);
-  overflow: scroll;
+  overflow-y: auto;
   color: var(--purple3);
   padding: var(--space-sm) var(--space-md);
 }
@@ -129,8 +136,6 @@ header > div {
   bottom: 0;
   width: 20px; /* one-off */
   background: var(--purple);
-  font-family: monospace;
-  font-size: 1.5em;
   transition: all var(--transition-fast);
 }
 .editor .tab:hover {

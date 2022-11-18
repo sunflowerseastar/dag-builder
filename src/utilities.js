@@ -1,6 +1,5 @@
-export const toggleParentId = (dag, id, pid) => {
-  // console.log("toggleParentId()", dag, id, pid);
-  return dag.map((obj) =>
+export const toggleParentId = (dag, id, pid) =>
+  dag.map((obj) =>
     obj.id === id
       ? {
           ...obj,
@@ -11,7 +10,6 @@ export const toggleParentId = (dag, id, pid) => {
         }
       : obj
   );
-};
 
 export const isAcyclic = (dag) => {
   if (!dag.length) {
