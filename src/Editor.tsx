@@ -2,32 +2,29 @@ import React from "react";
 import cx from "classnames";
 
 import { isAcyclic, toggleParentId } from "./utilities";
-
-import { CurrentDataState } from "./types";
+import { useDagContext } from "./hooks/useDag";
 
 interface EditorProps {
-  addNode: React.MouseEventHandler;
-  currentData: CurrentDataState;
   isEditorOpen: boolean;
-  removeNode: Function;
   setIsEditorOpen: Function;
-  toggleConnection: Function;
 }
 export const Editor: React.FC<EditorProps> = ({
-  addNode,
-  currentData,
   isEditorOpen,
-  removeNode,
   setIsEditorOpen,
-  toggleConnection,
 }) => {
-  const ids = currentData.data.map(({ id }) => id);
+  const {
+    actions: { addNode, removeNode, toggleConnection },
+    dagData,
+  } = useDagContext();
+
+  const ids = dagData.map(({ id }) => id);
+
   return (
     <div className={cx("editor", { isEditorOpen })}>
       <button className="tab" onClick={() => setIsEditorOpen(!isEditorOpen)} />
       <div className="editor-pane">
-        {currentData.data &&
-          currentData.data.map(({ id, parentIds = [] }) => (
+        {dagData &&
+          dagData.map(({ id, parentIds = [] }) => (
             <div key={id} className="node">
               <div className="node-id">
                 <button
@@ -47,7 +44,7 @@ export const Editor: React.FC<EditorProps> = ({
                       disabled:
                         possibleParentId === id ||
                         !isAcyclic(
-                          toggleParentId(currentData.data, id, possibleParentId)
+                          toggleParentId(dagData, id, possibleParentId)
                         ),
                       connected: parentIds.includes(possibleParentId),
                     })}

@@ -3,8 +3,13 @@
 // https://codepen.io/brinkbot/pen/oNZJXqK
 import { useEffect } from "react";
 
-import { DagType } from "./types";
 import Logo from "./Logo";
+import {
+  layeringChoices,
+  spacingChoices,
+  splineChoices,
+  useDagContext,
+} from "./hooks/useDag";
 
 const d3 = window.d3;
 
@@ -21,20 +26,20 @@ type D3point = {
   y: number;
 };
 
-interface DagProps {
-  areArrowsShown: boolean;
-  data: DagType;
-  layering: Function;
-  spacing: string;
-  spline: Function;
-}
-const Dag: React.FC<DagProps> = ({
-  areArrowsShown,
-  data,
-  layering,
-  spacing,
-  spline,
-}) => {
+interface DagProps {}
+const Dag: React.FC<DagProps> = () => {
+  const {
+    activeLayeringIndex,
+    activeSpacingIndex,
+    activeSplineIndex,
+    dagData,
+  } = useDagContext();
+  const data = dagData;
+  const layering = layeringChoices[activeLayeringIndex].layering;
+  const spacing = spacingChoices[activeSpacingIndex].name;
+  const spline = splineChoices[activeSplineIndex].spline;
+  const areArrowsShown = splineChoices[activeSplineIndex].areArrowsShown;
+
   useEffect(() => {
     const dag = d3.dagStratify()(data);
     const nodeRadius = 30;
