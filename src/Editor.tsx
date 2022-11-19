@@ -21,7 +21,7 @@ export const Editor: React.FC<EditorProps> = ({
   setIsEditorOpen,
   toggleConnection,
 }) => {
-  const ids = Object.keys(currentData.data);
+  const ids = currentData.data.map(({ id }) => id);
   return (
     <div className={cx("editor", { isEditorOpen })}>
       <button className="tab" onClick={() => setIsEditorOpen(!isEditorOpen)} />
