@@ -21,10 +21,10 @@ export const layeringChoices = [
     name: "Simplex",
     layering: window.d3.layeringSimplex(),
   },
-  {
-    name: "LongestPath",
-    layering: window.d3.layeringLongestPath(),
-  },
+  // {
+  //   name: "LongestPath",
+  //   layering: window.d3.layeringLongestPath(),
+  // },
   {
     name: "Coffman-Graham",
     layering: window.d3.layeringCoffmanGraham(),

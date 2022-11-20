@@ -49,33 +49,45 @@ const Header = () => {
     activeSplineIndex,
   } = useDagContext();
 
+  const dagOptions = [
+    {
+      heading: "Spline",
+      options: splineChoices,
+      activeIndex: activeSplineIndex,
+      setActiveIndex: setActiveSplineIndex,
+    },
+    {
+      heading: "Spacing",
+      options: spacingChoices,
+      activeIndex: activeSpacingIndex,
+      setActiveIndex: setActiveSpacingIndex,
+    },
+    {
+      heading: "Layering",
+      options: layeringChoices,
+      activeIndex: activeLayeringIndex,
+      setActiveIndex: setActiveLayeringIndex,
+    },
+    {
+      heading: "Data",
+      options: dataChoices,
+      activeIndex: activeDataIndex,
+      setActiveIndex: setActiveDataIndex,
+    },
+  ];
+
   return (
     <header>
       <div className="header-inner">
-        <SelectionGroup
-          heading="Layering"
-          options={layeringChoices}
-          activeIndex={activeLayeringIndex}
-          setActiveIndex={setActiveLayeringIndex}
-        />
-        <SelectionGroup
-          heading="Spline"
-          options={splineChoices}
-          activeIndex={activeSplineIndex}
-          setActiveIndex={setActiveSplineIndex}
-        />
-        <SelectionGroup
-          heading="Spacing"
-          options={spacingChoices}
-          activeIndex={activeSpacingIndex}
-          setActiveIndex={setActiveSpacingIndex}
-        />
-        <SelectionGroup
-          heading="Data"
-          options={dataChoices}
-          activeIndex={activeDataIndex}
-          setActiveIndex={setActiveDataIndex}
-        />
+        {dagOptions.map(({ heading, options, activeIndex, setActiveIndex }) => (
+          <SelectionGroup
+            key={heading}
+            heading={heading}
+            options={options}
+            activeIndex={activeIndex}
+            setActiveIndex={setActiveIndex}
+          />
+        ))}
       </div>
     </header>
   );
