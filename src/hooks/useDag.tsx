@@ -36,7 +36,7 @@ export const splineChoices = [
   {
     name: "Catmull-Rom",
     spline: window.d3.curveCatmullRom,
-    areArrowsShown: true,
+    areArrowsShown: false,
   },
   {
     name: "Step Before",
