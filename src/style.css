@@ -1,16 +1,15 @@
 :root {
-  --purple5: #0c041c;
-  --purple4: #120926;
   --purple: #1a0d36;
   --purple2: #4e3e80;
   --purple3: #8f7bcc;
+  --purple4: #120926;
+  --purple5: #0c041c;
   --purple6: #2c1a54;
   --purple7: #1d0f3c;
-  --mint: #ade3d9;
-  --black: #222;
   --red: #803e3e;
 
-  --space-xs: 0.2em;
+  --space-xxs: 0.24em;
+  --space-xs: 0.4em;
   --space-sm: 0.9em;
   --space-md: 1.8em;
 
@@ -24,6 +23,17 @@ body {
   letter-spacing: 0.02em;
   height: 100vh;
   color: white;
+  font-size: 0.8em;
+}
+@media (min-width: 480px) {
+  body {
+    font-size: 0.9em;
+  }
+}
+@media (min-width: 768px) {
+  body {
+    font-size: 1em;
+  }
 }
 p {
   position: relative;
@@ -38,20 +48,30 @@ p:after {
   position: absolute;
   bottom: -8px;
   left: 0;
-  width: 100%;
+  width: 80%;
   height: 1px;
   background: var(--purple6);
 }
+@media (min-width: 480px) {
+  p:after {
+    width: 100%;
+  }
+}
 button {
   display: block;
-  cursor: pointer;
   color: var(--purple2);
-  transition: all var(--transition-fast);
-  font-size: 0.88em;
   padding: var(--space-xs);
+  font-size: 0.88em;
   border-radius: 0;
   background: none;
   border: 0;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+@media (min-width: 480px) {
+  button {
+    padding: var(--space-xxs);
+  }
 }
 button:hover,
 button.active {
@@ -73,16 +93,26 @@ select {
 }
 header {
   background: linear-gradient(var(--purple), 64%, var(--purple4));
+  z-index: 2;
 }
 .header-inner {
   max-width: 1100px;
   margin: 0 auto;
   display: flex;
   justify-content: space-around;
-  padding: var(--space-md);
+  padding: var(--space-sm);
+}
+@media (min-width: 480px) {
+  .header-inner {
+    padding: var(--space-md);
+  }
 }
 header > div {
   flex: 1;
+}
+header button {
+  padding-left: 0;
+  text-align: left;
 }
 
 .main-container {
@@ -95,10 +125,17 @@ header > div {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 169%;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   flex: 1;
   transition: all var(--transition-medium);
+}
+@media (min-width: 768px) {
+  .main {
+    width: 169%;
+    flex-direction: row;
+  }
 }
 @media (min-width: 1400px) {
   .main {
@@ -108,10 +145,19 @@ header > div {
 .main.isEditorOpen {
   width: 100%;
 }
+@media (min-width: 1400px) {
+  .main.isEditorOpen {
+    width: 100%;
+  }
+}
 .dag-svg-container {
   position: relative;
   padding: var(--space-md) var(--space-sm);
   flex: 3;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  height: 100%;
   text-align: center;
 }
 .dag-svg {
@@ -151,15 +197,34 @@ header > div {
 }
 
 .editor {
-  position: relative;
-  flex: 2;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 50%;
+  box-sizing: border-box;
   background: var(--purple4);
-  padding: var(--space-md) 0 var(--space-md) var(--space-md);
   font-size: 1.5em;
+  z-index: 1;
+}
+@media (min-width: 768px) {
+  .editor {
+    position: relative;
+    flex: 2;
+    bottom: 0;
+    height: auto;
+    padding: var(--space-md) 0 var(--space-md) var(--space-md);
+  }
 }
 .editor.isEditorOpen {
-  /* background: var(--purple); */
+  bottom: 50%;
 }
+@media (min-width: 768px) {
+  .editor.isEditorOpen {
+    bottom: 0;
+  }
+}
+
 .editor-pane {
   background: var(--purple5);
   max-height: calc(100% - var(--space-md));
@@ -172,13 +237,23 @@ header > div {
 .editor .tab {
   position: absolute;
   z-index: 1;
-  left: 100%;
-  top: 0;
-  bottom: 0;
-  width: 20px; /* one-off */
+  left: 0;
+  width: 100%;
+  bottom: -20px;
+  height: 20px; /* one-off */
   background: var(--purple);
   transition: all var(--transition-fast);
 }
+@media (min-width: 768px) {
+  .editor .tab {
+    left: 100%;
+    top: 0;
+    bottom: 0;
+    height: auto;
+    width: 20px; /* one-off */
+  }
+}
+
 .editor .tab:hover {
   background: var(--purple2);
 }
@@ -205,7 +280,7 @@ header > div {
   transform: translateY(-47%);
   font-family: monospace;
   font-size: 0.7em;
-  padding: var(--space-xs);
+  padding: var(--space-xxs);
   color: var(--purple6);
 }
 .editor .node-id .button-remove:hover {
@@ -218,7 +293,7 @@ header > div {
 .editor .button-pid {
   font-family: monospace;
   display: inline-block;
-  padding: var(--space-xs);
+  padding: var(--space-xxs);
   min-width: 30px;
 }
 .editor .button-pid.disabled {
