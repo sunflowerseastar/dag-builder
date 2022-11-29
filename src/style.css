@@ -16,6 +16,8 @@
 
   --transition-fast: 90ms;
   --transition-medium: 200ms;
+  --transition-slow: 1200ms;
+  --transition-pulse: 3200ms;
 }
 
 body {
@@ -87,10 +89,20 @@ select {
 #root {
   height: 100%;
 }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .app {
   height: 100%;
   display: flex;
   flex-direction: column;
+  animation: fade-in var(--transition-slow);
 }
 header {
   background: linear-gradient(var(--gray26), 64%, var(--gray16));
@@ -207,6 +219,7 @@ header button {
   background: var(--gray16);
   font-size: 1.5em;
   z-index: 1;
+  transition: all var(--transition-fast);
 }
 @media (min-width: 768px) {
   .editor {
@@ -235,15 +248,36 @@ header button {
   color: var(--grayccc);
   padding: var(--space-sm) var(--space-md);
 }
+@keyframes pulse {
+  0% {
+    background: var(--gray26);
+  }
+  52% {
+    background: var(--gray26);
+  }
+  64% {
+    background: var(--gray80);
+  }
+  76% {
+    background: var(--gray26);
+  }
+  88% {
+    background: var(--gray80);
+  }
+  100% {
+    background: var(--gray26);
+  }
+}
 .editor .tab {
   position: absolute;
   z-index: 1;
   left: 0;
   width: 100%;
-  bottom: -20px;
-  height: 20px; /* one-off */
+  bottom: calc(-1 * var(--space-md));
+  height: var(--space-md);
   background: var(--gray26);
   transition: all var(--transition-fast);
+  animation: pulse var(--transition-pulse);
 }
 @media (min-width: 768px) {
   .editor .tab {
@@ -256,7 +290,7 @@ header button {
 }
 
 .editor .tab:hover {
-  background: var(--gray80);
+  background: var(--gray80) !important; /* override pulse */
 }
 .editor .node {
   display: flex;
