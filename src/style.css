@@ -1,11 +1,12 @@
 :root {
-  --purple: #1a0d36;
-  --purple2: #4e3e80;
-  --purple3: #8f7bcc;
-  --purple4: #120926;
-  --purple5: #0c041c;
-  --purple6: #2c1a54;
-  --purple7: #1d0f3c;
+  --gray000: #000;
+  --gray16: #161616;
+  --gray26: #262626;
+  --gray3d: #3d3d3d;
+  --gray54: #545454;
+  --gray80: #808080;
+  --grayccc: #ccc;
+
   --red: #803e3e;
 
   --space-xxs: 0.24em;
@@ -37,7 +38,7 @@ body {
 }
 p {
   position: relative;
-  color: var(--purple3);
+  color: var(--grayccc);
   padding-right: var(--space-md);
   margin: 0 0 var(--space-sm);
   cursor: default;
@@ -50,7 +51,7 @@ p:after {
   left: 0;
   width: 80%;
   height: 1px;
-  background: var(--purple6);
+  background: var(--gray54);
 }
 @media (min-width: 480px) {
   p:after {
@@ -59,7 +60,7 @@ p:after {
 }
 button {
   display: block;
-  color: var(--purple2);
+  color: var(--gray80);
   padding: var(--space-xs);
   font-size: 0.88em;
   border-radius: 0;
@@ -92,7 +93,7 @@ select {
   flex-direction: column;
 }
 header {
-  background: linear-gradient(var(--purple), 64%, var(--purple4));
+  background: linear-gradient(var(--gray26), 64%, var(--gray16));
   z-index: 2;
 }
 .header-inner {
@@ -189,8 +190,8 @@ header button {
   grid-row: 1 / 1;
   grid-column: 1 / 1;
 }
-.logo > div.purple {
-  background: var(--purple2);
+.logo > div.gray {
+  background: var(--gray80);
 }
 .logo:hover {
   opacity: 0.2;
@@ -203,7 +204,7 @@ header button {
   bottom: 100%;
   height: 50%;
   box-sizing: border-box;
-  background: var(--purple4);
+  background: var(--gray16);
   font-size: 1.5em;
   z-index: 1;
 }
@@ -226,12 +227,12 @@ header button {
 }
 
 .editor-pane {
-  background: var(--purple5);
+  background: var(--gray000);
   max-height: calc(100% - var(--space-md));
-  border-left: 1px solid var(--purple);
-  border-top: 1px solid var(--purple);
+  border-left: 1px solid var(--gray26);
+  border-top: 1px solid var(--gray26);
   overflow-y: auto;
-  color: var(--purple3);
+  color: var(--grayccc);
   padding: var(--space-sm) var(--space-md);
 }
 .editor .tab {
@@ -241,7 +242,7 @@ header button {
   width: 100%;
   bottom: -20px;
   height: 20px; /* one-off */
-  background: var(--purple);
+  background: var(--gray26);
   transition: all var(--transition-fast);
 }
 @media (min-width: 768px) {
@@ -255,14 +256,14 @@ header button {
 }
 
 .editor .tab:hover {
-  background: var(--purple2);
+  background: var(--gray80);
 }
 .editor .node {
   display: flex;
   padding: var(--space-sm) 0;
 }
 .editor .node + .node {
-  border-top: 1px solid var(--purple);
+  border-top: 1px solid var(--gray26);
 }
 .editor .node-id {
   position: relative;
@@ -281,7 +282,7 @@ header button {
   font-family: monospace;
   font-size: 0.7em;
   padding: var(--space-xxs);
-  color: var(--purple6);
+  color: var(--gray54);
 }
 .editor .node-id .button-remove:hover {
   color: var(--red);
@@ -297,19 +298,19 @@ header button {
   min-width: 30px;
 }
 .editor .button-pid.disabled {
-  background: var(--purple4);
+  background: var(--gray16);
   pointer-events: none;
   opacity: 0.5;
 }
 .editor .button-pid.connected {
-  background: var(--purple2);
+  background: var(--gray80);
   color: #bbb;
 }
 .editor .button-pid:hover {
-  background: var(--purple);
+  background: var(--gray26);
 }
 .editor .button-pid.connected:hover {
-  background: var(--purple2);
+  background: var(--gray80);
   color: #fff;
 }
 .editor .node-add {
@@ -320,9 +321,9 @@ header button {
   width: 100%;
   padding: var(--space-sm);
   font-family: monospace;
-  background: var(--purple);
+  background: var(--gray26);
 }
 .editor .button-add:hover {
-  color: var(--purple3);
-  background: var(--purple7);
+  color: var(--grayccc);
+  background: var(--gray3d);
 }

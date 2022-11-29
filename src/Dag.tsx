@@ -11,6 +11,8 @@ import {
   useDagContext,
 } from "./hooks/useDag";
 
+const gray000 = "#000";
+
 const d3 = window.d3;
 
 type D3node = {
@@ -102,14 +104,11 @@ const Dag: React.FC<DagProps> = () => {
             .attr("x2", target.x)
             .attr("y1", source.y)
             .attr("y2", target.y);
-          grad
-            .append("stop")
-            .attr("offset", "0%")
-            .attr("stop-color", "#4e3e80");
+          grad.append("stop").attr("offset", "0%").attr("stop-color", gray000);
           grad
             .append("stop")
             .attr("offset", "100%")
-            .attr("stop-color", "#1a0d36");
+            .attr("stop-color", gray000);
           return `url(#${gradId})`;
         }
       );
@@ -127,7 +126,7 @@ const Dag: React.FC<DagProps> = () => {
       );
 
     // Plot node circles
-    nodes.append("circle").attr("r", nodeRadius).attr("fill", "#4e3e80");
+    nodes.append("circle").attr("r", nodeRadius).attr("fill", gray000);
 
     if (areArrowsShown) {
       const arrowSize = (nodeRadius * nodeRadius) / 20.0;
@@ -163,8 +162,7 @@ const Dag: React.FC<DagProps> = () => {
             }) rotate(${angle})`;
           }
         )
-        // .attr("fill", ({ target }) => colorMap[target.data.id])
-        .attr("fill", "#4e3e80")
+        .attr("fill", gray000)
         .attr("stroke", "white")
         .attr("stroke-width", 1)
         .attr("stroke-dasharray", `${arrowLen},${arrowLen}`);

@@ -11,7 +11,7 @@ const Logo = () => (
     rel="noreferrer"
   >
     {binaryLogo.map((x: number, i: number) => (
-      <div key={i} className={x ? "purple" : ""} />
+      <div key={i} className={x ? "gray" : ""} />
     ))}
   </a>
 );
