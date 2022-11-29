@@ -1,8 +1,11 @@
-* dag-builder
+* DAG Builder
 
 #+begin_src sh
 yarn
-yarn start
+yarn start # localhost:3000
+
+yarn build
+yarn check-build # localhost:8080
 #+end_src
 
-Built from Erik Brinkman's [[https://github.com/erikbrinkman/d3-dag][d3-dag]].
+This explorer puts Erik Brinkman's [[https://d3js.org/][D3]] library [[https://github.com/erikbrinkman/d3-dag][d3-dag]] in TypeScript React ([[https://create-react-app.dev/][CRA]] with [[https://webpack.js.org/][webpack]]). [[https://prettier.io/][Prettier]] runs with [[https://github.com/toplenboren/simple-git-hooks][simple-git-hooks]] and [[https://github.com/okonet/lint-staged][lint-staged]]. The main components are ~Header~, ~Editor~ (the sliding pane), and ~Dag~ (the visualization). Shared state is managed via a provider's reducer in ~hooks/useDag.tsx~.

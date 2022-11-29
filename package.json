@@ -1,8 +1,9 @@
 {
   "name": "dag-builder",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "scripts": {
     "build": "react-scripts build",
+    "check-build": "cd build && npx http-server",
     "eject": "react-scripts eject",
     "prettier:check": "prettier --check '**/*.{html,ts,tsx,js,jsx,css,json}'",
     "prettier:write": "prettier --write '**/*.{html,ts,tsx,js,jsx,css,json}'",
