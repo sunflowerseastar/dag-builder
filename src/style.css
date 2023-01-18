@@ -279,6 +279,27 @@ header button {
   transition: all var(--transition-fast);
   animation: pulse var(--transition-pulse);
 }
+.editor .tab:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  /* down triangle */
+  width: 0;
+  height: 0;
+  border-top: 9px solid var(--gray54);
+  border-right: 9px solid transparent;
+  border-bottom: none;
+  border-left: 9px solid transparent;
+}
+.isEditorOpen .editor .tab:after {
+  /* up triangle */
+  border-top: none;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid var(--gray54);
+  border-left: 9px solid transparent;
+}
 @media (min-width: 768px) {
   .editor .tab {
     left: 100%;
@@ -286,6 +307,22 @@ header button {
     bottom: 0;
     height: auto;
     width: 20px; /* one-off */
+  }
+  .editor .tab:after {
+    /* right triangle */
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-right: none;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid var(--gray54);
+  }
+  .isEditorOpen .editor .tab:after {
+    /* left triangle */
+    border-top: 8px solid transparent;
+    border-right: 8px solid var(--gray54);
+    border-bottom: 8px solid transparent;
+    border-left: none;
   }
 }
 
