@@ -7,7 +7,7 @@ import Header from "./Header";
 import { Editor } from "./Editor";
 
 function App() {
-  const [isEditorOpen, setIsEditorOpen] = useState(true);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   return (
     <DagProvider>
