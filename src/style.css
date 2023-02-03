@@ -189,7 +189,7 @@ header button {
   grid-template-columns: repeat(13, 1fr);
   grid-auto-rows: 1fr;
   transition: all var(--transition-fast);
-  opacity: 0.14;
+  opacity: 0.05;
 }
 .logo::before {
   content: "";
@@ -206,7 +206,7 @@ header button {
   background: var(--gray80);
 }
 .logo:hover {
-  opacity: 0.2;
+  opacity: 0.1;
 }
 
 .editor {
